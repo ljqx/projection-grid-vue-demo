@@ -1,12 +1,16 @@
 <template>
-	<projection-grid :config="config" />
+  <div>
+    <Form :classes.sync="classes" :icon.sync="icon" />
+    <ProjectionGrid :config="config" />
+  </div>
 </template>
 
 <script>
 import ProjectionGrid from 'projection-grid-vue';
 import _ from 'lodash';
 
-import IconedCell from './components/iconed-cell.vue';
+import Form from './components/Form';
+import IconedCell from './components/IconedCell';
 import data from './data.json';
 
 class DataSource {
@@ -14,53 +18,49 @@ class DataSource {
     this.data = data;
     this.callback = callback;
   }
-
-  projection() {
-    
-  }
 }
 
 export default {
-	components: { ProjectionGrid },
-	data() {
-		return {
-			sortBy: null,
-			data: data.value,
-		};
-	},
+  components: { Form, ProjectionGrid },
+  data() {
+    return {
+      sortBy: null,
+      data: data.value,
+      classes: [],
+      icon: '',
+    };
+  },
 
   computed: {
     config() {
       return {
-        classes: ['mui-table', 'mui-table--bordered'],
+        classes: ['table'].concat(this.classes),
         data: this.data,
         caption: { content: 'Projection Grid Vue Demo' },
         cols: [{
           key: 'UserName',
           $td: {
-            content({ isHeader, data }, content) {
-              return {
-                Component: IconedCell,
-                props: { content, icon: 'pencil' },
-              };
-            }
+            content: ({ isHeader, data }, content) => ({
+              Component: IconedCell,
+              props: { content, icon: this.icon },
+            })
           },
           sorting: this.sortBy === 'UserName',
         },
         { key: 'FirstName' },
         { key: 'LastName' },
-        { 
+        {
           key: 'Emails',
           $td: {
             content({ isHeader, data }, { Component, props }) {
               if (isHeader) {
                 return { Component, props };
               }
-              return { 
-                Component, 
+              return {
+                Component,
                 props: {
                   text: props.text.join(' & ')
-                } 
+                }
               };
             }
           }
@@ -80,7 +80,7 @@ export default {
           },
           onSort: ({ key }) => {
             this.sortBy = key;
-						this.data = _.sortBy(this.data, key);
+            this.data = _.sortBy(this.data, key);
           },
         },
       };
