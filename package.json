@@ -3,9 +3,10 @@
   "description": null,
   "version": "0.0.20",
   "dependencies": {
-    "vue": "latest",
-    "projection-grid-vue": "0.2.2",
-    "lodash": "4.17.4"
+    "bootstrap": "^3.3.7",
+    "lodash": "^4.17.4",
+    "projection-grid-vue": "0.2.4",
+    "vue": "latest"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
