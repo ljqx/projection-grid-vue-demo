@@ -1,7 +1,14 @@
 <template>
-  <div>
-    <Form :classes.sync="classes" :icon.sync="icon" />
-    <ProjectionGrid :config="config" />
+  <div class="demo">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3>Projection Grid for VueJs</h3>
+      </div>
+      <div class="panel-body">
+        <Form :classes.sync="classes" :icon.sync="icon" />
+      </div>
+      <ProjectionGrid :config="config" />
+    </div>
   </div>
 </template>
 
